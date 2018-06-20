@@ -8,20 +8,20 @@ from collections import Counter
 def create_args_parser():
     parser = argparse.ArgumentParser()
     parser.add_argument('-f', '--filepath', required=True)
-    parser.add_argument('-m', '--most_common', default=10)
+    parser.add_argument('-m', '--top_numb', default=10)
     return parser
 
 
-def check_arguments(parser, args):
+def check_args(parser, args):
     if not exists(args.filepath):
         parser.error('File not found.')
-    if not isinstance(args.most_common, int):
+    if not isinstance(args.top_numb, int):
         parser.error('Integer expected')
 
 
 def define_file_encoding(filepath):
-    with open(filepath, 'rb') as raw_filecontent:
-        return chardet.detect(raw_filecontent.read()).get('encoding')
+    with open(filepath, 'rb') as raw_content:
+        return chardet.detect(raw_content.read()).get('encoding')
 
 
 def load_raw_content(filepath, encoding):
@@ -29,19 +29,21 @@ def load_raw_content(filepath, encoding):
         return raw_content.read()
 
 
-def strip_punctuation_and_digits(raw_content):
-    stripped_text = re.sub(r'\d+', '', (re.sub(r'[^\w\s]', '', raw_content)))
+def strip_punctuation_and_digits(loaded_content):
+    stripped_text = re.sub(r'\d+',
+                           '',
+                           (re.sub(r'[^\w\s]', '', loaded_content)))
     separated_words_list = re.findall(r'\w+', stripped_text)
     return separated_words_list
 
 
-def count_most_common(separated_words_list, most_common_count):
-    return Counter(separated_words_list).most_common(most_common_count)
+def count_most_common(separated_words_list, most_common_numb):
+    return Counter(separated_words_list).most_common(most_common_numb)
 
 
-def print_summary(counted_words):
+def print_summary(most_common_words_data):
     print("\nMost common words in text - descending order.\n")
-    for number, word in enumerate(counted_words, start=1):
+    for number, word in enumerate(most_common_words_data, start=1):
             print('{}. "{}" - {} inclusions'.format(
                 number,
                 word[0].capitalize(),
@@ -51,12 +53,12 @@ def print_summary(counted_words):
 def main():
     parser = create_args_parser()
     args = parser.parse_args()
-    check_arguments(parser, args)
+    check_args(parser, args)
     file_encoding = define_file_encoding(args.filepath)
     raw_data = load_raw_content(args.filepath, file_encoding)
     prepared_data = strip_punctuation_and_digits(raw_data)
-    counted_words = count_most_common(prepared_data, arguments.most_common)
-    print_summary(counted_words)
+    most_common_words_data = count_most_common(prepared_data, args.top_numb)
+    print_summary(most_common_words_data)
 
 
 if __name__ == '__main__':
