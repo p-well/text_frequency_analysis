@@ -3,7 +3,7 @@
 The purpose of this script is to perform Text Frequency Analysis.
 Script loads text from the file and prints out the most frequent words in descending order.
 
-You can specify amount of frequently found words by youself - see section <b>Usage/b> 
+You can specify amount of frequently found words by youself - see section <b>Usage</b> 
 for details of script launch.
 
 
