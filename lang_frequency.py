@@ -8,7 +8,7 @@ from collections import Counter
 def create_args_parser():
     parser = argparse.ArgumentParser()
     parser.add_argument('-f', '--filepath', required=True)
-    parser.add_argument('-t', '--top_numb', default=10)
+    parser.add_argument('-t', '--top_numb', default='10')
     return parser
 
 
