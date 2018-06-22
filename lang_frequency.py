@@ -8,15 +8,15 @@ from collections import Counter
 def create_args_parser():
     parser = argparse.ArgumentParser()
     parser.add_argument('-f', '--filepath', required=True)
-    parser.add_argument('-m', '--top_numb', default=10)
+    parser.add_argument('-t', '--top_numb', default=10)
     return parser
 
 
 def check_args(parser, args):
     if not exists(args.filepath):
         parser.error('File not found.')
-    if not isinstance(args.top_numb, int):
-        parser.error('Integer expected')
+    if not args.top_numb.isdigit():
+        parser.error('Integer expected.')
 
 
 def define_file_encoding(filepath):
@@ -37,8 +37,8 @@ def strip_punctuation_and_digits(loaded_content):
     return separated_words_list
 
 
-def count_most_common(separated_words_list, most_common_numb):
-    return Counter(separated_words_list).most_common(most_common_numb)
+def count_most_common(separated_words_list, top_numb):
+    return Counter(separated_words_list).most_common(top_numb)
 
 
 def print_summary(most_common_words_data):
@@ -57,7 +57,8 @@ def main():
     file_encoding = define_file_encoding(args.filepath)
     raw_data = load_raw_content(args.filepath, file_encoding)
     prepared_data = strip_punctuation_and_digits(raw_data)
-    most_common_words_data = count_most_common(prepared_data, args.top_numb)
+    most_common_words_data = count_most_common(prepared_data,
+                                               int(args.top_numb))
     print_summary(most_common_words_data)
 
 
