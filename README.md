@@ -20,7 +20,7 @@ It is recommended to use virtual environment.
 
 # Usage
 
-To execute the script use the following command in CLI: ```python lang_frequency.py <arguments>```
+To execute the script run the following command in CLI: ```python lang_frequency.py <arguments>```
 
 **Show available arguments:**
 
@@ -38,7 +38,7 @@ To execute the script use the following command in CLI: ```python lang_frequency
 **Instructions:**
 
 Argument ```-t/--top_numb``` is an optional argument that can be omitted.
-It this case script will shown 10 top frequent words.
+In this case script will show 10 top frequent words.
 
 Script will not run if you enter wrong filepath or specify not integer value in ```-t``` flag.
 
